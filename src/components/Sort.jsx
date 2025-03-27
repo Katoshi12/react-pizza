@@ -1,14 +1,14 @@
 import { useState } from "react";
 
 function Sort() {
-  const [open, setOpen] = useState(false)
+  const [visible, setVisible] = useState(false)
   const [selected, setSelected] = useState(0)
   
   const list = ['популярности', 'цене', 'алфавиту']
   
   const openItems = (index) => {
     setSelected(index)
-    setOpen(false)
+    setVisible(false)
   }
   
   return (
@@ -27,10 +27,10 @@ function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={ () => setOpen(!open) }>{ list[ selected ] }</span>
+        <span onClick={ () => setVisible(!visible) }>{ list[ selected ] }</span>
       </div>
       {
-        open && (
+        visible && (
           <div className="sort__popup">
             <ul>
               {
