@@ -13,7 +13,7 @@ function App() {
         <div className="container">
           
           <section className="content__top">
-            <Categories/>
+            {/*<Categories/>*/ }
             <Sort/>
           </section>
           
@@ -22,7 +22,7 @@ function App() {
           <section className="content__items">
             {
               pizzaItem.map((pizza) =>
-                <PizzaBlock { ...pizza }/>
+                <PizzaBlock key={ pizza.id } { ...pizza }/>
               )
             }
           </section>
