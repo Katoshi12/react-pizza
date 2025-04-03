@@ -11,15 +11,15 @@ const Home = () => {
     const url = 'https://67e5487418194932a58561f5.mockapi.io/items'
 
     useEffect(() => {
-
         fetch(url).then((response) => response.json())
             .then(json => {
                 setPizzaItems(json)
                 setIsLoading(false)
             })
+      window.scrollTo(0, 0)
     }, [])
     return (
-        <>
+        <div className="container">
             <section className="content__top">
                 <Categories/>
                 <Sort/>
@@ -35,7 +35,7 @@ const Home = () => {
                         ))
                 }
             </section>
-        </>
+        </div>
     )
 }
 
