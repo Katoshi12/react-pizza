@@ -3,11 +3,13 @@ import Sort from "../components/Sort.jsx";
 import Skeleton from "../components/PizzaBlock/Skeleton.jsx";
 import PizzaBlock from "../components/PizzaBlock/index.jsx";
 import { useEffect, useState } from "react";
+import Pagination from "../components/Pagination/index.jsx";
 
-const Home = () => {
+const Home = ({searchQuery}) => {
   const [pizzaItems, setPizzaItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [categoryId, setCategoryId] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1 )
   const [sortType, setSortType] = useState(
     {
       name: "популярности",
@@ -17,9 +19,10 @@ const Home = () => {
 
   const sortBy = sortType.sortProperty.replace("-", '')
   const order = sortType.sortProperty.includes("-") ? "asc" : "desc"
-  const category = categoryId > 0 ? `category_${ categoryId }` : ""
+  const category = categoryId > 0 ? `category=${ categoryId }` : ""
+  const search = searchQuery > 0 ? `&search=${ searchQuery }` : ""
 
-  const url = `https://67e5487418194932a58561f5.mockapi.io/items?${ category }&sortBy=${ sortBy }&order=${order}`
+  const url = `https://67e5487418194932a58561f5.mockapi.io/items?page=${currentPage}&limit=4&${ category }&sortBy=${ sortBy }&order=${ order }${ search }`
   useEffect(() => {
     setIsLoading(true)
     fetch(url).then((response) => response.json())
@@ -28,7 +31,7 @@ const Home = () => {
         setIsLoading(false)
       })
     window.scrollTo(0, 0)
-  }, [categoryId, url, sortType])
+  }, [categoryId, url, sortType, searchQuery, currentPage])
 
   return (
     <div className="container">
@@ -47,6 +50,7 @@ const Home = () => {
             ))
         }
       </section>
+      <Pagination onChangePage={ (number) => setCurrentPage(number) }/>
     </div>
   )
 }
