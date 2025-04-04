@@ -2,7 +2,7 @@ import logoSvg from '../../public/img/pizza-logo.svg'
 import { Link } from "react-router";
 import Search from "./Search/index.jsx";
 
-function Header({ searchQuery, setSearchQuery }) {
+function Header() {
   return (
     <header className="header">
       <div className="container">
@@ -16,7 +16,7 @@ function Header({ searchQuery, setSearchQuery }) {
           </div>
         </Link>
 
-        <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <Search/>
 
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">

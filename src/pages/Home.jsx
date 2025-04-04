@@ -2,14 +2,17 @@ import Categories from "../components/Categories.jsx";
 import Sort from "../components/Sort.jsx";
 import Skeleton from "../components/PizzaBlock/Skeleton.jsx";
 import PizzaBlock from "../components/PizzaBlock/index.jsx";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Pagination from "../components/Pagination/index.jsx";
+import { SearchContext } from "../App.jsx";
 
-const Home = ({searchQuery}) => {
+const Home = () => {
+  const {searchQuery} = useContext(SearchContext)
+
   const [pizzaItems, setPizzaItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [categoryId, setCategoryId] = useState(0)
-  const [currentPage, setCurrentPage] = useState(1 )
+  const [currentPage, setCurrentPage] = useState(1)
   const [sortType, setSortType] = useState(
     {
       name: "популярности",
@@ -20,9 +23,9 @@ const Home = ({searchQuery}) => {
   const sortBy = sortType.sortProperty.replace("-", '')
   const order = sortType.sortProperty.includes("-") ? "asc" : "desc"
   const category = categoryId > 0 ? `category=${ categoryId }` : ""
-  const search = searchQuery > 0 ? `&search=${ searchQuery }` : ""
+  const search = searchQuery ? `&search=${ searchQuery }` : ""
 
-  const url = `https://67e5487418194932a58561f5.mockapi.io/items?page=${currentPage}&limit=4&${ category }&sortBy=${ sortBy }&order=${ order }${ search }`
+  const url = `https://67e5487418194932a58561f5.mockapi.io/items?page=${ currentPage }&limit=4&${ category }&sortBy=${ sortBy }&order=${ order }${ search }`
   useEffect(() => {
     setIsLoading(true)
     fetch(url).then((response) => response.json())

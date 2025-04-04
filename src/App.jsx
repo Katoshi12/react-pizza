@@ -4,23 +4,25 @@ import Home from "./pages/Home.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import { Route, Routes } from "react-router";
 import Cart from "./pages/Cart.jsx";
-import { useState } from "react";
-import Pagination from "./components/Pagination/index.jsx";
+import { createContext, useState } from "react";
+
+export const SearchContext = createContext()
 
 function App() {
-  const [searchQuery, setSearchQuery ] = useState("");
-
+  const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <div className="wrapper">
-      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      <main className="content">
+      <SearchContext.Provider value={ {searchQuery, setSearchQuery} }>
+        <Header/>
+        <main className="content">
           <Routes>
-            <Route path="/" element={<Home searchQuery={searchQuery} />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="*" element={<NotFound />}  />
+            <Route path="/" element={ <Home/> }/>
+            <Route path="/cart" element={ <Cart/> }/>
+            <Route path="*" element={ <NotFound/> }/>
           </Routes>
-      </main>
+        </main>
+      </SearchContext.Provider>
     </div>
   )
 }
