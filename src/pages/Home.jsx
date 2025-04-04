@@ -1,3 +1,5 @@
+import { useDispatch, useSelector } from "react-redux";
+
 import Categories from "../components/Categories.jsx";
 import Sort from "../components/Sort.jsx";
 import Skeleton from "../components/PizzaBlock/Skeleton.jsx";
@@ -5,23 +7,25 @@ import PizzaBlock from "../components/PizzaBlock/index.jsx";
 import { useContext, useEffect, useState } from "react";
 import Pagination from "../components/Pagination/index.jsx";
 import { SearchContext } from "../App.jsx";
+import { setCategoryId } from "../store/slices/filterSlice.js";
 
 const Home = () => {
-  const {searchQuery} = useContext(SearchContext)
+  const dispatch = useDispatch();
 
+  const {categoryId, sort} = useSelector((state) => state.filterSlice);
+  const sortType = sort.sortProperty
+
+  const {searchQuery} = useContext(SearchContext)
   const [pizzaItems, setPizzaItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [categoryId, setCategoryId] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
-  const [sortType, setSortType] = useState(
-    {
-      name: "популярности",
-      sortProperty: "rating"
-    }
-  )
 
-  const sortBy = sortType.sortProperty.replace("-", '')
-  const order = sortType.sortProperty.includes("-") ? "asc" : "desc"
+  const onClickCategory = (id) => {
+    dispatch(setCategoryId(id));
+  }
+
+  const sortBy = sortType.replace("-", '')
+  const order = sortType.includes("-") ? "asc" : "desc"
   const category = categoryId > 0 ? `category=${ categoryId }` : ""
   const search = searchQuery ? `&search=${ searchQuery }` : ""
 
@@ -39,8 +43,8 @@ const Home = () => {
   return (
     <div className="container">
       <section className="content__top">
-        <Categories onClickCategory={ (id) => setCategoryId(id) } id={ categoryId }/>
-        <Sort onClickSort={ (value) => setSortType(value) } value={ sortType }/>
+        <Categories onClickCategory={ onClickCategory } id={ categoryId }/>
+        <Sort/>
       </section>
 
       <h2 className="content__title">Все пиццы</h2>
