@@ -19,10 +19,10 @@ const Home = () => {
   const isMounted = useRef(false);
   const isSearch = useRef(false);
 
-  const { categoryId, sort, currentPage } = useSelector((state) => state.filterSlice);
-  const sortType = sort?.sortProperty || "rating";
+  const {categoryId, sort, currentPage} = useSelector((state) => state.filterSlice);
+  const sortType = sort?.sortProperty
 
-  const { searchQuery } = useContext(SearchContext);
+  const {searchQuery} = useContext(SearchContext);
 
   const [pizzaItems, setPizzaItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -42,7 +42,7 @@ const Home = () => {
 
       dispatch(
         setFilters({
-          sort: sortList || { name: 'популярности', sortProperty: 'rating' },
+          sort: sortList,
           categoryId: Number(params.categoryId) || 0,
           currentPage: Number(params.currentPage) || 1,
         })
@@ -57,12 +57,12 @@ const Home = () => {
 
     const sortBy = sortType.replace("-", "");
     const order = sortType.includes("-") ? "asc" : "desc";
-    const category = categoryId > 0 ? `category=${categoryId}` : "";
-    const search = searchQuery ? `&search=${searchQuery}` : "";
+    const category = categoryId > 0 ? `category=${ categoryId }` : "";
+    const search = searchQuery ? `&search=${ searchQuery }` : "";
 
     axios
       .get(
-        `https://67e5487418194932a58561f5.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
+        `https://67e5487418194932a58561f5.mockapi.io/items?page=${ currentPage }&limit=4&${ category }&sortBy=${ sortBy }&order=${ order }${ search }`
       )
       .then((response) => {
         setPizzaItems(response.data);
@@ -74,7 +74,7 @@ const Home = () => {
     window.scrollTo(0, 0);
 
     if (!isSearch.current) {
-      fetchPizzas()
+      fetchPizzas();
     }
 
     isSearch.current = false;
@@ -88,7 +88,7 @@ const Home = () => {
         currentPage,
       });
 
-      navigate(`?${queryString}`);
+      navigate(`?${ queryString }`);
     }
 
     isMounted.current = true;
@@ -97,18 +97,18 @@ const Home = () => {
   return (
     <div className="container">
       <section className="content__top">
-        <Categories onClickCategory={onClickCategory} id={categoryId} />
-        <Sort />
+        <Categories onClickCategory={ onClickCategory } id={ categoryId }/>
+        <Sort/>
       </section>
 
       <h2 className="content__title">Все пиццы</h2>
 
       <section className="content__items">
-        {isLoading
-          ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
-          : pizzaItems.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
+        { isLoading
+          ? [...new Array(6)].map((_, index) => <Skeleton key={ index }/>)
+          : pizzaItems.map((pizza) => <PizzaBlock key={ pizza.id } { ...pizza } />) }
       </section>
-      <Pagination value={currentPage} onChangePage={changePage} />
+      <Pagination value={ currentPage } onChangePage={ changePage }/>
     </div>
   );
 };
