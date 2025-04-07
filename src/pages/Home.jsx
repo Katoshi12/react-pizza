@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 import Categories from "../components/Categories.jsx";
 import Sort from "../components/Sort.jsx";
@@ -16,6 +17,7 @@ const Home = () => {
   const sortType = sort.sortProperty
 
   const {searchQuery} = useContext(SearchContext)
+
   const [pizzaItems, setPizzaItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
@@ -24,21 +26,21 @@ const Home = () => {
     dispatch(setCategoryId(id));
   }
 
-  const sortBy = sortType.replace("-", '')
-  const order = sortType.includes("-") ? "asc" : "desc"
-  const category = categoryId > 0 ? `category=${ categoryId }` : ""
-  const search = searchQuery ? `&search=${ searchQuery }` : ""
-
-  const url = `https://67e5487418194932a58561f5.mockapi.io/items?page=${ currentPage }&limit=4&${ category }&sortBy=${ sortBy }&order=${ order }${ search }`
   useEffect(() => {
     setIsLoading(true)
-    fetch(url).then((response) => response.json())
-      .then(json => {
-        setPizzaItems(json)
+
+    const sortBy = sortType.replace("-", '')
+    const order = sortType.includes("-") ? "asc" : "desc"
+    const category = categoryId > 0 ? `category=${ categoryId }` : ""
+    const search = searchQuery ? `&search=${ searchQuery }` : ""
+
+    axios.get(`https://67e5487418194932a58561f5.mockapi.io/items?page=${ currentPage }&limit=4&${ category }&sortBy=${ sortBy }&order=${ order }${ search }`)
+      .then(response => {
+        setPizzaItems(response.data)
         setIsLoading(false)
       })
     window.scrollTo(0, 0)
-  }, [categoryId, url, sortType, searchQuery, currentPage])
+  }, [categoryId, sortType, searchQuery, currentPage])
 
   return (
     <div className="container">
