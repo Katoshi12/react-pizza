@@ -4,16 +4,10 @@ import Home from "./pages/Home.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import { Route, Routes } from "react-router";
 import Cart from "./pages/Cart.jsx";
-import { createContext, useState } from "react";
-
-export const SearchContext = createContext()
 
 function App() {
-  const [searchQuery, setSearchQuery] = useState("");
-
   return (
     <div className="wrapper">
-      <SearchContext.Provider value={ {searchQuery, setSearchQuery} }>
         <Header/>
         <main className="content">
           <Routes>
@@ -22,7 +16,6 @@ function App() {
             <Route path="*" element={ <NotFound/> }/>
           </Routes>
         </main>
-      </SearchContext.Provider>
     </div>
   )
 }

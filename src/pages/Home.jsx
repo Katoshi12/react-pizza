@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import qs from "qs";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -8,7 +8,6 @@ import Sort, { list } from "../components/Sort.jsx";
 import Skeleton from "../components/PizzaBlock/Skeleton.jsx";
 import PizzaBlock from "../components/PizzaBlock/index.jsx";
 import Pagination from "../components/Pagination/index.jsx";
-import { SearchContext } from "../App.jsx";
 import { setCategoryId, setCurrentPageCount, setFilters } from "../store/slices/filterSlice.js";
 import { fetchPizza } from "../store/slices/pizzaSlice.js";
 
@@ -19,12 +18,10 @@ const Home = () => {
   const isMounted = useRef(false);
   const isSearch = useRef(false);
 
-  const {categoryId, sort, currentPage} = useSelector((state) => state.filterSlice);
+  const {categoryId, sort, currentPage, searchValue} = useSelector((state) => state.filterSlice);
   const sortType = sort?.sortProperty
 
   const {items, status} = useSelector((state) => state.pizzaSlice);
-
-  const {searchQuery} = useContext(SearchContext);
 
 
   const onClickCategory = (id) => {
@@ -57,7 +54,7 @@ const Home = () => {
     const sortBy = sortType.replace("-", "");
     const order = sortType.includes("-") ? "asc" : "desc";
     const category = categoryId > 0 ? `category=${ categoryId }` : "";
-    const search = searchQuery ? `&search=${ searchQuery }` : "";
+    const search = searchValue ? `&search=${ searchValue }` : "";
 
     dispatch(
       fetchPizza({
@@ -79,7 +76,7 @@ const Home = () => {
     }
 
     getPizzas();
-  }, [categoryId, sortType, searchQuery, currentPage]);
+  }, [categoryId, sortType, searchValue, currentPage]);
 
 
   useEffect(() => {
