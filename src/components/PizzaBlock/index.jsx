@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../store/slices/cartSlice.js";
+import { Link } from "react-router";
 
 function Index({id, title, price, imageUrl, sizes, types}) {
   const dispatch = useDispatch();
   const cartItem = useSelector(state => state.cartSlice.items.find(item => item.id === id));
+
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
 
@@ -28,12 +30,15 @@ function Index({id, title, price, imageUrl, sizes, types}) {
   return (
     <section className="pizza-block-wrapper">
       <div className="pizza-block">
-        <img
-          className="pizza-block__image"
-          src={ imageUrl }
-          alt="Pizza"
-        />
-        <h4 className="pizza-block__title">{ title }</h4>
+        <Link to={ `/pizza/${id}` }>
+          <img
+            className="pizza-block__image"
+            src={ imageUrl }
+            alt="Pizza"
+          />
+          <h4 className="pizza-block__title">{ title }</h4>
+        </Link>
+
         <div className="pizza-block__selector">
           <ul>
             {
