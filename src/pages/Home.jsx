@@ -6,10 +6,10 @@ import { useNavigate } from "react-router";
 import Categories from "../components/Categories.jsx";
 import Sort, { list } from "../components/Sort.jsx";
 import Skeleton from "../components/PizzaBlock/Skeleton.jsx";
-import PizzaBlock from "../components/PizzaBlock/index.jsx";
 import Pagination from "../components/Pagination/index.jsx";
 import { setCategoryId, setCurrentPageCount, setFilters } from "../store/slices/filterSlice.js";
 import { fetchPizza } from "../store/slices/pizzaSlice.js";
+import PizzaBlock from "../components/PizzaBlock/index.jsx";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -92,6 +92,10 @@ const Home = () => {
 
     isMounted.current = true;
   }, [categoryId, sortType, currentPage]);
+
+  const pizzas = items.map((pizza) => <PizzaBlock key={ pizza.id } { ...pizza }/>)
+  const skeleton = [...new Array(6)].map((_, index) => <Skeleton key={ index }/>)
+
   return (
     <div className="container">
       <section className="content__top">
@@ -111,8 +115,9 @@ const Home = () => {
           </div> :
           <section className="content__items">
             { status === 'loading'
-              ? [...new Array(6)].map((_, index) => <Skeleton key={ index }/>)
-              : items.map((pizza) => <PizzaBlock key={ pizza.id } { ...pizza } />) }
+              ? skeleton
+              : pizzas
+            }
           </section>
       }
 
