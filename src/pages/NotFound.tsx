@@ -1,4 +1,4 @@
-import NotFoundBlock from "../components/NotFoundBlock/index.jsx";
+import NotFoundBlock from "../components/NotFoundBlock";
 
 const NotFound = () => {
   return (

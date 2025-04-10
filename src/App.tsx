@@ -1,10 +1,10 @@
 import "./assets/scss/app.scss"
-import Home from "./pages/Home.jsx";
-import NotFound from "./pages/NotFound.jsx";
-import { Route, Routes } from "react-router";
-import Cart from "./pages/Cart.jsx";
-import FullPizza from "./pages/FullPizza.jsx";
-import MainLayout from "./layouts/MainLayout.jsx";
+import Home from "./pages/Home.js";
+import NotFound from "./pages/NotFound.js";
+import {Route, Routes} from "react-router";
+import Cart from "./pages/Cart.js";
+import FullPizza from "./pages/FullPizza.js";
+import MainLayout from "./layouts/MainLayout.js";
 
 function App() {
   return (

@@ -3,13 +3,13 @@ import qs from "qs";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
-import Categories from "../components/Categories.jsx";
-import Sort, { list } from "../components/Sort.jsx";
-import Skeleton from "../components/PizzaBlock/Skeleton.jsx";
-import Pagination from "../components/Pagination/index.jsx";
+import Categories from "../components/Categories.js";
+import Sort, { list } from "../components/Sort.js";
+import Skeleton from "../components/PizzaBlock/Skeleton.js";
+import Pagination from "../components/Pagination";
 import { setCategoryId, setCurrentPageCount, setFilters } from "../store/slices/filterSlice.js";
 import { fetchPizza } from "../store/slices/pizzaSlice.js";
-import PizzaBlock from "../components/PizzaBlock/index.jsx";
+import PizzaBlock from "../components/PizzaBlock";
 
 const Home = () => {
   const navigate = useNavigate();
