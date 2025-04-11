@@ -1,7 +1,7 @@
-import {Link, useNavigate, useParams} from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import axios from "axios";
-import {FC, useEffect, useState} from "react";
-
+import { FC, useEffect, useState } from "react";
+import Loading from "../components/Loading";
 
 const FullPizza: FC = () => {
   const {id} = useParams();
@@ -33,9 +33,7 @@ const FullPizza: FC = () => {
   }, [id, navigate]);
 
   if (loading || !pizza) {
-    return <div className="container">
-      <span className="loader"></span>
-    </div>;
+    return <Loading/>;
   }
 
   return (

@@ -1,11 +1,14 @@
 import { FC, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import Categories from "../components/Categories.js";
-import Sort from "../components/Sort.js";
-import Skeleton from "../components/PizzaBlock/Skeleton.js";
-import Pagination from "../components/Pagination";
-import PizzaBlock from "../components/PizzaBlock";
+import {
+  Categories,
+  Pagination,
+  PizzaBlock,
+  Skeleton,
+  Sort
+} from "../components";
+
 import { useAppDispatch } from "../store";
 import { filterSelector } from "../store/filter/selectors";
 import { setCategoryId, setCurrentPageCount } from "../store/filter/slice";
