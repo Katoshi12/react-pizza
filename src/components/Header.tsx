@@ -1,9 +1,9 @@
 import logoSvg from '../../public/img/pizza-logo.svg'
-import {Link, useLocation} from "react-router";
+import { Link, useLocation } from "react-router";
 import Search from "./Search";
-import {useSelector} from "react-redux";
-import {selectCart} from "../store/slices/cartSlice.js";
-import {FC} from "react";
+import { useSelector } from "react-redux";
+import { selectCart } from "../store/slices/cartSlice.js";
+import { FC } from "react";
 
 const Header: FC = () => {
   const {items, totalPrice} = useSelector(selectCart);
@@ -24,7 +24,7 @@ const Header: FC = () => {
           </div>
         </Link>
 
-        <Search/>
+        { pathname !== "/cart" && <Search/> }
         <div className="header__cart">
           { pathname !== "/cart" && (
             <Link to="/cart" className="button button--cart">

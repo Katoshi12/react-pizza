@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import Categories from "../components/Categories.js";
@@ -32,9 +32,9 @@ const Home: FC = () => {
   const {items, status} = useSelector(pizzaSelector);
 
 
-  const onClickCategory = (id: number) => {
+  const onClickCategory = useCallback((id: number) => {
     dispatch(setCategoryId(id));
-  };
+  }, [])
 
   const changePage = (page: number) => {
     dispatch(setCurrentPageCount(page));

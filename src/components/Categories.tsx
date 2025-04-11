@@ -1,11 +1,13 @@
-import {FC} from "react";
+import { FC, memo } from "react";
+import useWhyDidYouUpdate from "ahooks/lib/useWhyDidYouUpdate";
 
 type CategoriesProps = {
   id: number
   onClickCategory: (id: number) => void
 }
 
-const Categories: FC<CategoriesProps> = ({id, onClickCategory}) => {
+const Categories: FC<CategoriesProps> = memo(({id, onClickCategory}) => {
+  useWhyDidYouUpdate('Categories', {id, onClickCategory})
 
   const categories = [
     "Все",
@@ -33,6 +35,6 @@ const Categories: FC<CategoriesProps> = ({id, onClickCategory}) => {
       </ul>
     </section>
   )
-}
+})
 
 export default Categories
