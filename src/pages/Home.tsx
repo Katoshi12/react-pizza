@@ -5,14 +5,12 @@ import Categories from "../components/Categories.js";
 import Sort from "../components/Sort.js";
 import Skeleton from "../components/PizzaBlock/Skeleton.js";
 import Pagination from "../components/Pagination";
-import {
-  filterSelector,
-  setCategoryId,
-  setCurrentPageCount
-} from "../store/slices/filterSlice.js";
-import { fetchPizza, pizzaSelector } from "../store/slices/pizzaSlice.js";
 import PizzaBlock from "../components/PizzaBlock";
 import { useAppDispatch } from "../store";
+import { filterSelector } from "../store/filter/selectors";
+import { setCategoryId, setCurrentPageCount } from "../store/filter/slice";
+import { pizzaSelector } from "../store/pizza/selectors";
+import { fetchPizza } from "../store/pizza/asyncAction";
 
 const Home: FC = () => {
   // const navigate = useNavigate();
