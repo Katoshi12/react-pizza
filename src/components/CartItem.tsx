@@ -1,13 +1,37 @@
 import { useDispatch } from "react-redux";
-import { addItem, decrementItem, removeItem } from "../store/slices/cartSlice.js";
+import {
+  addItem,
+  CartItem,
+  decrementItem,
+  removeItem
+} from "../store/slices/cartSlice.js";
+import { FC } from "react";
 
-const CartItem = ({id, title, size,type, price, count, imageUrl}) => {
+type CartItemProps = {
+  id: number
+  title: string
+  size: number
+  type: string
+  price: number
+  count: number
+  imageUrl: string
+}
+
+const CartItemBlock: FC<CartItemProps> = ({
+  id,
+  title,
+  size,
+  type,
+  price,
+  count,
+  imageUrl
+}) => {
   const dispatch = useDispatch();
 
   const onIncrement = () => {
     dispatch(addItem({
       id
-    }))
+    } as CartItem))
   }
 
   const onDecrement = () => {
@@ -81,4 +105,4 @@ const CartItem = ({id, title, size,type, price, count, imageUrl}) => {
   )
 }
 
-export default CartItem;
+export default CartItemBlock;

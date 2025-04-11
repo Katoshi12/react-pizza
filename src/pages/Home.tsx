@@ -1,53 +1,53 @@
-import { useEffect, useRef } from "react";
-import qs from "qs";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { FC, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import Categories from "../components/Categories.js";
-import Sort, { list } from "../components/Sort.js";
+import Sort from "../components/Sort.js";
 import Skeleton from "../components/PizzaBlock/Skeleton.js";
 import Pagination from "../components/Pagination";
-import { setCategoryId, setCurrentPageCount, setFilters } from "../store/slices/filterSlice.js";
-import { fetchPizza } from "../store/slices/pizzaSlice.js";
+import {
+  filterSelector,
+  setCategoryId,
+  setCurrentPageCount
+} from "../store/slices/filterSlice.js";
+import { fetchPizza, pizzaSelector } from "../store/slices/pizzaSlice.js";
 import PizzaBlock from "../components/PizzaBlock";
+import { useAppDispatch } from "../store";
 
-const Home = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+const Home: FC = () => {
+  // const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const isMounted = useRef(false);
-  const isSearch = useRef(false);
+  // const isMounted = useRef<boolean>(false);
+  // const isSearch = useRef<boolean>(false);
 
-  const {categoryId, sort, currentPage, searchValue} = useSelector((state) => state.filterSlice);
+  const {
+    categoryId,
+    sort,
+    currentPage,
+    searchValue
+  } = useSelector(filterSelector);
   const sortType = sort?.sortProperty
 
-  const {items, status} = useSelector((state) => state.pizzaSlice);
+  const {items, status} = useSelector(pizzaSelector);
 
 
-  const onClickCategory = (id) => {
+  const onClickCategory = (id: number) => {
     dispatch(setCategoryId(id));
   };
 
-  const changePage = (page) => {
+  const changePage = (page: number) => {
     dispatch(setCurrentPageCount(page));
   };
 
-  useEffect(() => {
-    if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
-      const sortList = list.find((obj) => obj.sortProperty === params.sortProperty);
-
-      dispatch(
-        setFilters({
-          sort: sortList || list[0],
-          categoryId: Number(params.categoryId) || 0,
-          currentPage: Number(params.currentPage) || 1,
-        })
-      );
-
-      isSearch.current = false;
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (window.location.search) {
+  //     const params = qs.parse(window.location.search.substring(1));
+  //     const sortList = list.find((obj) => obj.sortProperty ===
+  // params.sortBy);  dispatch(setFilters({ searchValue: params.search,
+  // categoryId: Number(params.categoryId), currentPage:
+  // Number(params.currentPage), sort: sortList || list[0], }))
+  // isSearch.current = false; } }, []);
 
 
   const getPizzas = async () => {
@@ -68,32 +68,29 @@ const Home = () => {
   }
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-
-    if (isSearch.current) {
-      isSearch.current = true;
-      return;
-    }
-
     getPizzas();
   }, [categoryId, sortType, searchValue, currentPage]);
 
 
-  useEffect(() => {
-    if (isMounted.current) {
-      const queryString = qs.stringify({
-        sortProperty: sortType,
-        categoryId,
-        currentPage,
-      });
+  // useEffect(() => {
+  //   if (isMounted.current) {
+  //     const queryString = qs.stringify({
+  //       sortProperty: sortType,
+  //       categoryId,
+  //       currentPage,
+  //     });
+  //
+  //     navigate(`?${ queryString }`);
+  //   }
+  //
+  //   if (!window.location.search) {
+  //     dispatch(fetchPizza({} as FetchData))
+  //   }
+  //   isMounted.current = true;
+  // }, [categoryId, sortType, currentPage]);
 
-      navigate(`?${ queryString }`);
-    }
-
-    isMounted.current = true;
-  }, [categoryId, sortType, currentPage]);
-
-  const pizzas = items.map((pizza) => <PizzaBlock key={ pizza.id } { ...pizza }/>)
+  const pizzas = items.map((pizza: any) => <PizzaBlock
+    key={ pizza.id } { ...pizza }/>)
   const skeleton = [...new Array(6)].map((_, index) => <Skeleton key={ index }/>)
 
   return (
@@ -107,7 +104,7 @@ const Home = () => {
 
       {
         status === 'error' ? <div className="content__error-info">
-            <h2>Произошла ошибка <icon>😕</icon></h2>
+            <h2>Произошла ошибка <span>😕</span></h2>
             <p>
               К сожалению нам не удалось получить пиццы. Попробуйте повторить попытку позже, мы уже занимаемся
               исправлением данной ошибки
@@ -122,7 +119,7 @@ const Home = () => {
       }
 
 
-      <Pagination value={ currentPage } onChangePage={ changePage }/>
+      <Pagination currentPage={ currentPage } onChangePage={ changePage }/>
     </div>
   );
 };
