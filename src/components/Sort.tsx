@@ -1,6 +1,8 @@
 import { FC, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSortType, SortPropertyEnums } from "../store/slices/filterSlice.js";
+import { setSortType } from "../store/filter/slice";
+import { selectorSort } from "../store/filter/selectors";
+import { SortPropertyEnums } from "../store/filter/types";
 
 type SortItemType = {
   name: string
@@ -36,8 +38,7 @@ export const list: SortItemType[] = [
 
 const Sort: FC = () => {
   const dispatch = useDispatch();
-  // @ts-ignore
-  const sort = useSelector(state => state.filterSlice.sort);
+  const sort = useSelector(selectorSort);
   const sortRef = useRef<HTMLDivElement>(null);
 
   const [visible, setVisible] = useState(false)
