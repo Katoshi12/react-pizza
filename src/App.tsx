@@ -8,6 +8,7 @@ import Loading from "./components/Loading";
 const Cart = lazy(() => import("./pages/Cart"));
 const FullPizza = lazy(() => import("./pages/FullPizza"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const Profile = lazy(() => import("./pages/Profile"));
 
 function App() {
   return (
@@ -26,6 +27,13 @@ function App() {
             <Loading/>
           }>
             <FullPizza/>
+          </Suspense>
+        }/>
+        <Route path="profile" element={
+          <Suspense fallback={
+            <Loading/>
+          }>
+            <Profile/>
           </Suspense>
         }/>
         <Route path="*" element={

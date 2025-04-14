@@ -69,6 +69,18 @@ const Header: FC = () => {
               <span>{ totalCount }</span>
             </Link>
           ) }
+
+          <div>
+            { pathname !== "/profile" && (
+              <Link to="/profile">
+                <img
+                  src="../../public/img/profile.png"
+                  alt="Профиль пользователя"
+                  width={ 56 } height={ 56 } loading="lazy"
+                />
+              </Link>
+            ) }
+          </div>
         </div>
       </div>
     </header>
