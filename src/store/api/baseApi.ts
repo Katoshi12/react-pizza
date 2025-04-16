@@ -1,5 +1,7 @@
-const API_URL = import.meta.env.VITE_API_URL
+import { PizzaItem } from "../pizza/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+const API_URL = import.meta.env.VITE_API_URL
 
 type GetPizzaParams = {
   currentPage: number;
@@ -15,7 +17,7 @@ export const baseApi = createApi({
     baseUrl: API_URL,
   }),
   endpoints: (builder) => ({
-    getPizzas: builder.query<any, GetPizzaParams>({
+    getPizzas: builder.query<PizzaItem, GetPizzaParams>({
       query: ({currentPage, category, sortBy, order, search}) => ({
         url: '/items',
         params: {

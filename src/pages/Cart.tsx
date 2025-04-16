@@ -4,12 +4,13 @@ import { FC } from "react";
 import { selectCart } from "../store/cart/selectors";
 import { clearItems } from "../store/cart/slice";
 import { CartEmpty, CartItem } from "../components";
+import { CartItemType } from "../store/cart/types";
 
 const Cart: FC = () => {
   const dispatch = useDispatch();
   const {totalPrice, items} = useSelector(selectCart);
 
-  const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0);
+  const totalCount = items.reduce((sum: number, item: CartItemType) => sum + item.count, 0);
 
   const onClear = () => {
     if (window.confirm(`Вы действительно хотите очистить корзину ?`)) {
@@ -57,7 +58,7 @@ const Cart: FC = () => {
         </div>
         <div className="content__items">
           {
-            items.map((item: any) => (
+            items.map((item: CartItemType) => (
               <CartItem key={ item.id } { ...item } />
             ))
           }

@@ -32,7 +32,7 @@ const Home: FC = () => {
     category: categoryId,
     sortBy: sortType.replace("-", ""),
     order: sortType.includes("-") ? "asc" : "desc",
-    search: searchValue ? `&search=${ searchValue }` : "",
+    search: searchValue,
   });
 
   const onClickCategory = useCallback((id: number) => {

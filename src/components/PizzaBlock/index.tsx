@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Link } from "react-router";
 import { selectCartItemById } from "../../store/cart/selectors";
-import { CartItem } from "../../store/cart/types";
+import { CartItemType } from "../../store/cart/types";
 import { addItem } from "../../store/cart/slice";
 
 type PizzaBlockProps = {
@@ -35,7 +35,7 @@ const Index: FC<PizzaBlockProps> = ({
   const typeName = ['Тонкое', "Традиционное"]
 
   const add = () => {
-    const item: CartItem = {
+    const item: CartItemType = {
       id,
       title,
       price,
