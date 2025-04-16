@@ -4,12 +4,13 @@ import Search from "./Search";
 import { useSelector } from "react-redux";
 import { FC, useEffect, useRef } from "react";
 import { selectCart } from "../store/cart/selectors";
+import { CartItemType } from "../store/cart/types";
 
 const Header: FC = () => {
   const {items, totalPrice} = useSelector(selectCart);
   const {pathname} = useLocation();
   const isMounted = useRef<boolean>(false)
-  const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0);
+  const totalCount = items.reduce((sum: number, item: CartItemType) => sum + item.count, 0);
 
   useEffect(() => {
     if (!isMounted.current) {

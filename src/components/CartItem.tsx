@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 
 import { FC } from "react";
 import { addItem, decrementItem, removeItem } from "../store/cart/slice";
-import { CartItem } from "../store/cart/types";
+import { CartItemType } from "../store/cart/types";
 
 type CartItemProps = {
   id: number
@@ -28,7 +28,7 @@ const CartItemBlock: FC<CartItemProps> = ({
   const onIncrement = () => {
     dispatch(addItem({
       id
-    } as CartItem))
+    } as CartItemType))
   }
 
   const onDecrement = () => {
