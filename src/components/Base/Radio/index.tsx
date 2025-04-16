@@ -1,5 +1,6 @@
 import { FC, InputHTMLAttributes } from "react";
 import styles from "./radio.module.scss";
+import clsx from "clsx";
 
 type RadioProps = {
   label: string;
@@ -20,7 +21,10 @@ const Radio: FC<RadioProps> = ({
         <input
           type="radio"
           id={id}
-          className={`${styles.radio__input} ${error ? styles.radio__input_error : ""}`}
+          className={ clsx(
+            styles.radio__input,
+            error && styles.radio__input_error
+          ) }
           {...props}
         />
         {label}

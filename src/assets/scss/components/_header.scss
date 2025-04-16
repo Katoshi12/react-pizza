@@ -14,7 +14,8 @@
       column-gap: 20px;
       align-items: center;
     }
-    @media (max-width: 645px) {
+
+    @media (max-width: $breakpoint-sm) {
       flex-direction: column;
       .header__cart {
         margin-top: 30px;

@@ -15,7 +15,7 @@ body {
   border-radius: 10px;
   max-width: 1400px;
 
-  @media (max-width: 645px) {
+  @media (max-width: $breakpoint-sm) {
     width: calc(100vw - 30px);
     margin-top: 15px;
   }
@@ -51,13 +51,13 @@ body {
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(1, 1fr);
     grid-column-gap: 10px;
-    @media (max-width: 1400px) {
+    @media (max-width: $breakpoint-xxl) {
       grid-template-columns: repeat(3, 1fr);
     }
-    @media (max-width: 1060px) {
+    @media (max-width: $breakpoint-md-lg) {
       grid-template-columns: repeat(2, 1fr);
     }
-    @media (max-width: 730px) {
+    @media (max-width: $breakpoint-sm-md) {
       grid-template-columns: 1fr;
     }
   }
@@ -67,7 +67,7 @@ body {
     align-items: center;
     justify-content: space-between;
 
-    @media (max-width: 1260px) {
+    @media (max-width: $breakpoint-xl) {
       .categories {
         width: 100%;
         overflow: auto;
@@ -85,14 +85,14 @@ body {
       }
     }
 
-    @media (max-width: 1110px) {
+    @media (max-width: $breakpoint-lg) {
       .categories {
         margin-top: 35px;
       }
       flex-direction: column-reverse;
     }
-    
-    @media (max-width: 760px) {
+
+    @media (max-width: $breakpoint-md) {
       .categories {
         ul {
           li {
@@ -365,10 +365,7 @@ body {
       color: #777777;
     }
 
-    icon {
-      position: relative;
-      top: 2px;
-    }
+
 
     img {
       display: block;

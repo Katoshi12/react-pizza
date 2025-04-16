@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router";
 import MainLayout from "./layouts/MainLayout.js";
 import { lazy, Suspense } from "react";
 import Loading from "./components/Loading";
+import { routes } from "./routes";
 
 const Cart = lazy(() => import("./pages/Cart"));
 const FullPizza = lazy(() => import("./pages/FullPizza"));
@@ -13,34 +14,29 @@ const Profile = lazy(() => import("./pages/Profile"));
 function App() {
   return (
     <Routes>
-      <Route path="/" element={ <MainLayout/> }>
+      <Route path={ routes.home() } element={ <MainLayout/> }>
         <Route path="" element={ <Home/> }/>
-        <Route path="cart" element={
-          <Suspense fallback={
-            <Loading/>
-          }>
+        <Route path={ routes.cart() } element={
+          <Suspense fallback={ <Loading/> }>
             <Cart/>
           </Suspense>
         }/>
-        <Route path="pizza/:id" element={
-          <Suspense fallback={
-            <Loading/>
-          }>
+        <Route path={ routes.pizza(":id") } element={
+          <Suspense fallback={ <Loading/> }>
             <FullPizza/>
           </Suspense>
         }/>
-        <Route path="profile" element={
-          <Suspense fallback={
-            <Loading/>
-          }>
+        <Route path={ routes.profile() } element={
+          <Suspense fallback={ <Loading/> }>
             <Profile/>
           </Suspense>
         }/>
-        <Route path="*" element={
-          <Suspense>
+        <Route path={ routes.notFound() } element={
+          <Suspense fallback={ <Loading/> }>
             <NotFound/>
           </Suspense>
         }/>
+
       </Route>
 
     </Routes>

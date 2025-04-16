@@ -1,5 +1,6 @@
 import { FC, InputHTMLAttributes } from "react";
 import styles from "./input.module.scss";
+import clsx from "clsx";
 
 type InputProps = {
   label?: string;
@@ -16,7 +17,10 @@ const Input: FC<InputProps> = ({label, error, errorMessage, id, ...props}) => {
         </label>
       ) }
       <input
-        className={ `${ styles.input__field } ${ error ? styles.input__field_error : "" }` }
+        className={ clsx(
+          styles.input__field,
+          error && styles.input__field_error
+        ) }
         id={ id }
         { ...props }
       />

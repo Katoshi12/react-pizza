@@ -5,6 +5,14 @@ import Input from "../components/Base/Input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Radio from "../components/Base/Radio";
 import { Link } from "react-router";
+import { useProfileStorage } from "../hooks/useProfileStorage";
+import { routes } from "../routes";
+
+export type ProfileData = {
+  fullName: string;
+  birthday: string;
+  gender: "men" | "women";
+}
 
 const formFieldSchema = z.object({
   fullName: z.string().min(1, "ФИО обязательно"),
@@ -33,15 +41,11 @@ const formFieldSchema = z.object({
   }),
 });
 
-
 type FormFields = z.infer<typeof formFieldSchema>
 
 export const ProfilePage: FC = () => {
-  const [item, setItem] = useState<{
-    fullName: string;
-    birthday: string;
-    gender: "men" | "women";
-  }>()
+  const [itemProfile, setItemProfile] = useState<ProfileData | undefined>()
+  const {getProfileData, setProfileData} = useProfileStorage()
 
   const {
     register,
@@ -52,20 +56,14 @@ export const ProfilePage: FC = () => {
   })
 
   const onSubmit: SubmitHandler<FormFields> = (data: FormFields) => {
-    try {
-      localStorage.setItem('form', JSON.stringify(data))
-      setItem(data)
-      reset()
-    } catch (e) {
-      console.log(e)
-    }
+    setProfileData(data);
+    setItemProfile(data);
+    reset();
   }
 
   useEffect(() => {
-    const data = localStorage.getItem('form')
-    if (data) {
-      setItem(JSON.parse(data))
-    }
+    const data: ProfileData | undefined = getProfileData();
+    setItemProfile(data);
   }, [])
 
   return (
@@ -78,8 +76,8 @@ export const ProfilePage: FC = () => {
           loading="lazy"
         />
         <div className="profile__text">
-          <p>{ item?.fullName }</p>
-          <p>{ item?.gender === 'men' ? "Мужской" : 'Женский' }</p>
+          <p>{ itemProfile?.fullName }</p>
+          <p>{ itemProfile?.gender === 'men' ? "Мужской" : 'Женский' }</p>
         </div>
       </div>
       <div className="profile__bottom">
@@ -123,11 +121,13 @@ export const ProfilePage: FC = () => {
 
           <div className="action">
             <button
-              className="button profile__button button--outline"
+              className="button profile__button "
               type="submit">
               Сохранить изменения
             </button>
-            <Link to="/" className="button profile__button" type="submit">
+            <Link to={ routes.home() }
+                  className="button button--outline profile__button"
+                  type="submit">
               Вернуться назад
             </Link>
           </div>
