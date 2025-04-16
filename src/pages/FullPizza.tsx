@@ -2,6 +2,7 @@ import { Link, useNavigate, useParams } from "react-router";
 import axios from "axios";
 import { FC, useEffect, useState } from "react";
 import Loading from "../components/Loading";
+import { routes } from "../routes";
 
 const FullPizza: FC = () => {
   const {id} = useParams();
@@ -45,7 +46,8 @@ const FullPizza: FC = () => {
 
           <div className="pizza-block__bottom">
             <div className="pizza-block__price">от { pizza.price } ₽</div>
-            <Link to="/" className="button button--outline button--add">
+            <Link to={ routes.home() }
+                  className="button button--outline button--add">
               <span>Назад</span>
             </Link>
           </div>

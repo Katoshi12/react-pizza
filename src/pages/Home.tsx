@@ -16,11 +16,7 @@ import { pizzaSelector } from "../store/pizza/selectors";
 import { fetchPizza } from "../store/pizza/asyncAction";
 
 const Home: FC = () => {
-  // const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  // const isMounted = useRef<boolean>(false);
-  // const isSearch = useRef<boolean>(false);
 
   const {
     categoryId,

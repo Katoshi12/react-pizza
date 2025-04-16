@@ -5,6 +5,7 @@ import { Link } from "react-router";
 import { selectCartItemById } from "../../store/cart/selectors";
 import { CartItem } from "../../store/cart/types";
 import { addItem } from "../../store/cart/slice";
+import { routes } from "../../routes";
 
 type PizzaBlockProps = {
   id: number
@@ -51,7 +52,7 @@ const Index: FC<PizzaBlockProps> = ({
   return (
     <section className="pizza-block-wrapper">
       <div className="pizza-block">
-        <Link to={ `/pizza/${id}` }>
+        <Link to={routes.pizza(id)}>
           <img
             className="pizza-block__image"
             src={ imageUrl }

@@ -1,0 +1,26 @@
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  &__label {
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  &__field {
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+
+    &_error {
+      border-color: red;
+    }
+  }
+
+  &__errorMessage {
+    color: red;
+    font-size: 12px;
+  }
+}

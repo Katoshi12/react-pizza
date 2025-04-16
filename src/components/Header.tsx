@@ -4,6 +4,7 @@ import Search from "./Search";
 import { useSelector } from "react-redux";
 import { FC, useEffect, useRef } from "react";
 import { selectCart } from "../store/cart/selectors";
+import { routes } from "../routes";
 
 const Header: FC = () => {
   const {items, totalPrice} = useSelector(selectCart);
@@ -21,7 +22,7 @@ const Header: FC = () => {
   return (
     <header className="header">
       <div className="container">
-        <Link to="/">
+        <Link to={ routes.home() }>
           <div className="header__logo">
             <img width="38" src={ logoSvg } alt="Pizza logo"/>
             <div>
@@ -31,10 +32,10 @@ const Header: FC = () => {
           </div>
         </Link>
 
-        { pathname !== "/cart" && <Search/> }
+        { pathname !== routes.cart() && <Search/> }
         <div className="header__cart">
-          { pathname !== "/cart" && (
-            <Link to="/cart" className="button button--cart">
+          { pathname !== routes.cart() && (
+            <Link to={ routes.cart() } className="button button--cart">
               <span>{ totalPrice } ₽</span>
               <div className="button__delimiter"></div>
               <svg
@@ -69,6 +70,18 @@ const Header: FC = () => {
               <span>{ totalCount }</span>
             </Link>
           ) }
+
+          <div>
+            { pathname !== routes.profile() && (
+              <Link to={ routes.profile() }>
+                <img
+                  src="../../public/img/profile.png"
+                  alt="Профиль пользователя"
+                  width={ 56 } height={ 56 } loading="lazy"
+                />
+              </Link>
+            ) }
+          </div>
         </div>
       </div>
     </header>
