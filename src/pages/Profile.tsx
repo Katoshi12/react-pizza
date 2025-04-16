@@ -1,17 +1,17 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 import Input from "../components/Base/Input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Radio from "../components/Base/Radio";
 import { Link } from "react-router";
-import { useProfileStorage } from "../hooks/useProfileStorage";
 import { routes } from "../routes";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export type ProfileData = {
   fullName: string;
   birthday: string;
-  gender: "men" | "women";
+  gender: string;
 }
 
 const formFieldSchema = z.object({
@@ -44,8 +44,15 @@ const formFieldSchema = z.object({
 type FormFields = z.infer<typeof formFieldSchema>
 
 export const ProfilePage: FC = () => {
-  const [itemProfile, setItemProfile] = useState<ProfileData | undefined>()
-  const {getProfileData, setProfileData} = useProfileStorage()
+  const [profileData, setProfileData] = useLocalStorage(
+    "profile",
+    {
+      fullName: "",
+      birthday: "",
+      gender: ""
+    }
+  );
+
 
   const {
     register,
@@ -55,16 +62,10 @@ export const ProfilePage: FC = () => {
     resolver: zodResolver(formFieldSchema)
   })
 
-  const onSubmit: SubmitHandler<FormFields> = (data: FormFields) => {
+  const onSubmit: SubmitHandler<FormFields> = (data) => {
     setProfileData(data);
-    setItemProfile(data);
     reset();
-  }
-
-  useEffect(() => {
-    const data: ProfileData | undefined = getProfileData();
-    setItemProfile(data);
-  }, [])
+  };
 
   return (
     <div className="profile container">
@@ -76,8 +77,8 @@ export const ProfilePage: FC = () => {
           loading="lazy"
         />
         <div className="profile__text">
-          <p>{ itemProfile?.fullName }</p>
-          <p>{ itemProfile?.gender === 'men' ? "Мужской" : 'Женский' }</p>
+          <p>{ profileData?.fullName }</p>
+          <p>{ profileData?.gender === 'men' ? "Мужской" : 'Женский' }</p>
         </div>
       </div>
       <div className="profile__bottom">
