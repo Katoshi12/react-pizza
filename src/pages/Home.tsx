@@ -13,6 +13,7 @@ import { useGetPizzasQuery } from "../store/api/baseApi";
 import { useAppDispatch } from "../store";
 import { filterSelector } from "../store/filter/selectors";
 import { setCategoryId, setCurrentPageCount } from "../store/filter/slice";
+import { PizzaItem } from "../store/pizza/types";
 
 const Home: FC = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +29,7 @@ const Home: FC = () => {
 
   const {data = [], isLoading, isError} = useGetPizzasQuery({
     currentPage,
-    category: categoryId > 0 ? `category=${ categoryId }` : "",
+    category: categoryId,
     sortBy: sortType.replace("-", ""),
     order: sortType.includes("-") ? "asc" : "desc",
     search: searchValue ? `&search=${ searchValue }` : "",
@@ -42,9 +43,10 @@ const Home: FC = () => {
     dispatch(setCurrentPageCount(page));
   };
 
-  const pizzas = data.map((pizza: any) => (
+  const pizzas = data.map((pizza: PizzaItem) => (
     <PizzaBlock key={ pizza.id } { ...pizza } />
   ));
+
   const skeleton = [...new Array(6)].map((_, index) => (
     <Skeleton key={ index }/>
   ));
